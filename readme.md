@@ -1,4 +1,4 @@
-** simple dummy pokedéx were you can list your favorite pokemons :3**
+**Simple dummy pokedéx were you can list your favorite pokemons :3**
 
 Pokemon entry structure:
 
@@ -14,13 +14,13 @@ Pokemon entry structure:
 
  - int: generation
 
- - vetor de string: weaknesses
+ - string list: weaknesses
 
- - vetor de string: strengths
+ - string list: strengths
 
- - vetor de string: immunities
+ - string list: immunities
 
- - vetor de string: egg group (`breeding`)
+ - string list: egg group (`breeding`)
 
 Entries are persisted in a text database, with key value pairs, each on a line. A blank line separates the pokedéx entries.
 
@@ -31,3 +31,13 @@ Example:
 	evolution state: 3
 	weight: 18.6
 	breeding: grass
+
+**Aspects:**
+
+ - C++23 standard.
+
+ - C style IO (cstdio library) rather than C++ style IO (iostream), proeminently for printing and scanning.
+
+ - std::list instead std::vector for entries in pokedex.
+
+ - Optional graphical interface (probably either GTK or Raylib).
