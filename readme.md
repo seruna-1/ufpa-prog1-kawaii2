@@ -39,3 +39,5 @@ Example:
  - C style IO (cstdio library) rather than C++ style IO (iostream), proeminently for printing and scanning.
 
  - Optional graphical interface (probably either GTK or Raylib).
+
+ - Handmade linked list instead of std::vector :/
