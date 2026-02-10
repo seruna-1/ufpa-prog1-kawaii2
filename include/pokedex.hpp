@@ -1,12 +1,13 @@
 #include <string>
-#include <vector>
+#include <memory>
 
+#include "pokedex_pokemon_entry.hpp"
 #include "pokemon.hpp"
 
 class Pokedex
 {
 protected:
-	std::vector<Pokemon> pokemons;
+	std::unique_ptr<PokedexPokemonEntry> first_pokemon_entry;
 
 public:
 	enum class SortType
@@ -22,25 +23,29 @@ public:
 	(void);
 
 	Pokemon
-	get_pokemon
+	get
 	(int index);
 
 	// Validates and inserts pokemon.
 	bool
-	add_pokemon
+	add
 	(Pokemon pokemon);
 
 	bool
-	delete_pokemon_by_global_id
-	(unsigned int id);
+	remove
+	(std::string name);
+
+	void
+	print_to_stdout
+	(void);
 
 	bool
 	save_to_file
-	(std::string filename);
+	(const char* filename);
 
 	bool
 	load_from_file
-	(std::string filename);
+	(const char* filename);
 
 	void
 	sort

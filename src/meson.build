@@ -1,5 +1,6 @@
 pokedex_cli_src = files(
-	'cli/main.cpp',
+	'command_line/main.cpp',
+	'command_line/pokedex.cpp',
 	'pokemon.cpp',
 	'pokedex.cpp',
 )

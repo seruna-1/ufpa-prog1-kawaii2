@@ -1,7 +1,10 @@
-id: 45
-name: vileplume
-ability: chlorophyll
-evolution stage: 3
-weight: 41.0
-generation: 1
-weaknesses: [fire, ice, flying, psychic]
+pokemon
+{
+	id 45
+	name [vileplume]
+	ability [chlorophyll]
+	evolution stage 3
+	weight float 41.0
+	generation 1
+	weaknesses {[fire] [ice] [flying] [psychic]}
+}
