@@ -5,13 +5,22 @@
 
 const char *CommandLinePokedex::help_message =
 "Non-interactive mode for pokedex."
-"It performs operations on the source file, like adding or removing entries, only by command line flags.\n\n"
+"It performs operations on the source file, like adding or removing entries, only by command line flags.\n"
+"\n"
+"Load entries into memory from a source file:\n"
+"\t--source <file>\n"
+"Getting how many entries in memory:\n"
+"\t--size\n"
+"Listing the entries in memory (can be used to write to a source file):\n"
+"\t--print\n"
 "Adding an entry to pokedex. OBS: See representation syntax.\n"
 "\t--add <pokemon representation>\n"
 "Deleting a pokemon by its name.\n"
 "\t--remove <pokemon name>\n"
-"Specifying the source file for entries:\n"
-"\t--source <file>\n";
+"\n"
+"Examples:\n"
+"\tpokedex-cli --source test.txt --print\n"
+;
 
 CommandLinePokedex::ParsingResult
 CommandLinePokedex::parse
@@ -39,10 +48,7 @@ CommandLinePokedex::parse
 		else if (strcmp(key, "--add") == 0)
 		{
 			printf("Adding by parsing: %s\n.", argv[i++]);
-			//pokedex.add(argv[i++]);
-			Pokemon test;
-			test.name = "antedegemon";
-			pokedex.add(test);
+			pokedex.load_pokemon(argv[i++]);
 		}
 		// --remove <pokemon>
 		else if (strcmp(key, "--remove") == 0)
@@ -57,7 +63,14 @@ CommandLinePokedex::parse
 		{
 			pokedex.load_from_file(argv[++i]);
 		}
+		else if (strcmp(key, "--print") == 0)
+		{
+			pokedex.print_to_stdout();
+		}
+		else if (strcmp(key, "--size") == 0)
+		{
+			std::cout << pokedex.size() << std::endl;
+		}
 	}
-	pokedex.print_to_stdout();
 	return ParsingResult::CONTINUE;
 }

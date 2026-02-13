@@ -8,13 +8,12 @@ class Pokemon
 public:
 	unsigned int global_id; // ID in global pokedéx.
 	std::string name;
-	std::string ability;
 	unsigned int evolution_stage; // from 1 onwards
-	float weigth; // in lbs. TODO: convertable to kg
+	float weight; // in lbs. TODO: convertable to kg
 	unsigned int generation; // generation that introduced this pokemon
-	std::string weaknesses[5]; // we just assume 5 for now, since std::vector is prohibited
+	std::string abilities[5]; // we just assume 5 for now, since std::vector is prohibited
+	std::string weaknesses[5];
 	std::string strengths[5];
-	std::string immunities[5];
 	std::string egg_group[5];
 
 	// Parses a key-value formatted string.

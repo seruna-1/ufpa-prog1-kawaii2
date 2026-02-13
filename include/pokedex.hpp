@@ -7,7 +7,7 @@
 class Pokedex
 {
 protected:
-	std::unique_ptr<PokedexPokemonEntry> first_pokemon_entry;
+	std::shared_ptr<PokedexPokemonEntry> first_pokemon_entry;
 
 public:
 	enum class SortType
@@ -42,6 +42,10 @@ public:
 	bool
 	save_to_file
 	(const char* filename);
+
+	bool
+	load_pokemon
+	(std::string block);
 
 	bool
 	load_from_file

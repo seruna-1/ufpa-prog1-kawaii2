@@ -50,7 +50,18 @@ bool
 Pokedex::remove
 (std::string name)
 {
-	(void)name;
+	PokedexPokemonEntry *current_entry = first_pokemon_entry.get();
+	while (current_entry != NULL)
+	{
+		if (current_entry->pokemon.name != name)
+		{ current_entry = current_entry->successor.get(); }
+		else
+		{
+			current_entry->predecessor->successor =  current_entry->successor;
+			current_entry->successor->predecessor =  current_entry->predecessor;
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -61,7 +72,7 @@ Pokedex::print_to_stdout
 	PokedexPokemonEntry *current_entry = first_pokemon_entry.get();
 	while (current_entry != NULL)
 	{
-		std::cout << current_entry->pokemon.name;
+		std::cout << current_entry->pokemon.name << std::endl;
 		current_entry = current_entry->successor.get();
 	}
 }
@@ -86,38 +97,108 @@ Pokedex::save_to_file
 	return true;
 }
 
+// Reads a string and extracts information of a pokemon
+bool
+Pokedex::load_pokemon
+(std::string block)
+{
+	// Format: <field>: <value>; ...
+	Pokemon pokemon;
+	pokemon.name = "";
+	size_t key_value_pair_boundaries[2] = {0, 0};
+	bool keep_consuming_key_value_pairs = true;
+	while (keep_consuming_key_value_pairs)
+	{
+		key_value_pair_boundaries[0] = block.find_first_not_of("; \n", key_value_pair_boundaries[1]);
+		key_value_pair_boundaries[1] = block.find(";", key_value_pair_boundaries[0]);
+		if (key_value_pair_boundaries[1] == std::string::npos)
+		{
+			if (pokemon.name == "")
+			{ return false; }
+			else
+			{ add(pokemon); return true; }
+		}
+		else
+		{
+			size_t key_value_separator_position = block.find(":", key_value_pair_boundaries[0]);
+			if (key_value_separator_position == std::string::npos)
+			{
+				perror("Syntax error. Missing key-value separator.\n");
+				return false;
+			}
+			size_t key_length = key_value_separator_position - key_value_pair_boundaries[0];
+			std::string key = block.substr(key_value_pair_boundaries[0], key_length);
+			size_t value_length = block.find_last_not_of("; \n", key_value_pair_boundaries[1]) - key_value_separator_position - 1;
+			std::string value = block.substr(
+				block.find_first_not_of(" ", key_value_separator_position+1),
+				value_length
+			);
+			//std::cout << key_value_pair_boundaries[0] << "-" << key_value_separator_position << "-" << key_value_pair_boundaries[1];
+			//std::cout << "|" << key << "|" << value << "|" << std::endl;
+			if (key == "id")
+			{ pokemon.global_id = std::stoi(value); }
+			else if (key == "name")
+			{ pokemon.name = value; }
+			else if (key == "evolution stage")
+			{ pokemon.evolution_stage = std::stoi(value); }
+			else if (key == "generation")
+			{ pokemon.generation = std::stoi(value); }
+			else if (key == "weight")
+			{ pokemon.weight = std::stof(value); }
+			else if (key == "abilities")
+			{ pokemon.abilities[0] = value; }
+			else if (key == "weaknesses")
+			{ pokemon.weaknesses[0] = value; }
+			else
+			{
+				fprintf(stderr, "Unsupported key: %s.\n", key.c_str());
+				return false;
+			}
+		}
+	}
+	return false;
+}
+
+// Loads file into memory, then passes blocks separated by blank lines (\n\n) to load pokemon
 bool
 Pokedex::load_from_file
 (const char* filename)
 {
-	std::ifstream source_file(filename);
-	if (!source_file.is_open())
+	// Read whole file into memory
+	FILE* source_file = std::fopen(filename, "r");
+	if (!source_file)
 	{
 		fputs("Error loading from file. File not open.", stderr);
 		return false;
 	}
-	Pokemon pokemon;
-	std::string line;
-	while (std::getline(source_file, line))
+
+	std::string source;
 	{
-		size_t key_value_separator_position = line.find(":");
-		if (key_value_separator_position == std::string::npos)
-		{
-			add(pokemon);
-			//pokemon.clear();
-		}
-		else
-		{
-			std::string key = line.substr(0, key_value_separator_position);
-			std::string value = line.substr( line.find_first_not_of(" ", key_value_separator_position+1) );
-			if (key == "name")
-			{ pokemon.name = value; }
-			else
-			{ fprintf(stderr, "Unsupported key: %s.\n", key.c_str()); }
-		}
+		std::fseek(source_file, 0, SEEK_END);
+		long size = std::ftell(source_file);
+		std::fseek(source_file, 0, SEEK_SET);
+		source.resize(size);
+		std::fread(&source[0], 1, size, source_file);
 	}
-	add(pokemon); // flush
-	source_file.close();
+	std::fclose(source_file);
+
+	// Look for pokemon block boundaries and pass to load_pokemon
+	size_t pokemon_block_boundaries[2] = {0, 0};
+	bool keep_looking_for_blocks = true;
+	while(keep_looking_for_blocks)
+	{
+		// Look for next blank line
+		pokemon_block_boundaries[0] = source.find_first_not_of("\n ", pokemon_block_boundaries[1]);
+		pokemon_block_boundaries[1] = source.find("\n\n", pokemon_block_boundaries[0]);
+		if (pokemon_block_boundaries[1] == std::string::npos)
+		{
+			// End of source file
+			keep_looking_for_blocks = false;
+			pokemon_block_boundaries[1] = source.length();
+		}
+		size_t pokemon_block_length = pokemon_block_boundaries[1] - pokemon_block_boundaries[0];
+		load_pokemon( source.substr( pokemon_block_boundaries[0], pokemon_block_length ) );
+	}
 	return true;
 }
 
