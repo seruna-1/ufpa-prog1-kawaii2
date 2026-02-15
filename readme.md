@@ -34,28 +34,38 @@ weight: 18.6;
 breeding: grass;
 ```
 
-**Building:**
+**Aspects:**
+
+ - C++23 standard.
+
+ - C style IO (cstdio library) rather than C++ style IO (iostream) in many cases, proeminently for simple printing.
+
+ - Handmade linked list instead of std::vector.
+
+**To do:**
+
+ - Optional graphical interface (Raylib).
+
+## Building
+
+**With meson:**
 
 ```sh
 meson setup build
 ninja -C build
 ```
 
-**Building without meson:**
+**Without meson:**
 
 ```sh
 clang++ -I include/ src/command_line/main.cpp src/command_line/pokedex.cpp  src/pokemon.cpp src/pokedex.cpp -o pokedex-cli
 ``` 
 
-**Aspects:**
+## Testing
 
- - C++23 standard.
+For simple testing, `test/` comes with `smalldex.txt` that has a few entries for testing.
 
- - C style IO (cstdio library) rather than C++ style IO (iostream), proeminently for printing and scanning.
-
- - Optional graphical interface (probably either GTK or Raylib).
-
- - Handmade linked list instead of std::vector :/
+For intensive testing, `test/bigdex.rb` generates a file named `bigdex.txt` by fetching and converting a json file from [olitreadwell](https://github.com/olitreadwell/pokemon-classic-json/blob/main/pokedex.json), which reunites 151 classic pokemons.
 
 ## License
 

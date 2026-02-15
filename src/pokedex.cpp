@@ -205,14 +205,19 @@ Pokedex::load_from_file
 		// Look for next blank line
 		pokemon_block_boundaries[0] = source.find_first_not_of("\n ", pokemon_block_boundaries[1]);
 		pokemon_block_boundaries[1] = source.find("\n\n", pokemon_block_boundaries[0]);
-		if (pokemon_block_boundaries[1] == std::string::npos)
+		if (pokemon_block_boundaries[0] == std::string::npos)
+		{ keep_looking_for_blocks = false; } // End of source file, no block left
+		else
 		{
-			// End of source file
-			keep_looking_for_blocks = false;
-			pokemon_block_boundaries[1] = source.length();
+			if (pokemon_block_boundaries[1] == std::string::npos)
+			{
+				// End of source file, one block left
+				keep_looking_for_blocks = false;
+				pokemon_block_boundaries[1] = source.length();
+			}
+			size_t pokemon_block_length = pokemon_block_boundaries[1] - pokemon_block_boundaries[0];
+			load_pokemon( source.substr( pokemon_block_boundaries[0], pokemon_block_length ) );
 		}
-		size_t pokemon_block_length = pokemon_block_boundaries[1] - pokemon_block_boundaries[0];
-		load_pokemon( source.substr( pokemon_block_boundaries[0], pokemon_block_length ) );
 	}
 	return true;
 }
