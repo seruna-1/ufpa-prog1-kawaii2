@@ -9,6 +9,10 @@ project('kawaii_dexu', 'cpp',
 cc = meson.get_compiler('cpp')
 
 raylib_dep = dependency('raylib', required: true)
+add_project_arguments('-Wno-missing-field-initializers', language : 'cpp')
+
+raygui_project = subproject('raygui')
+raygui_dependency = raygui_project.get_variable('raygui_dependency')
 
 subdir('src')
 
@@ -21,12 +25,13 @@ executable('pokedex-cli',
 )
 
 executable('pokedex',
-	pokedex_src,
+	pokedex_gui_src,
 	install : false,
 	include_directories: [
 		'include'
 	],
 	dependencies: [
 		raylib_dep,
+		raygui_dependency
 	],
 )

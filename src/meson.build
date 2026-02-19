@@ -5,8 +5,9 @@ pokedex_cli_src = files(
 	'pokedex.cpp',
 )
 
-pokedex_src = files(
-	'gui/main.cpp',
+pokedex_gui_src = files(
+	'graphical/main.cpp',
+	'graphical/pokedex.cpp',
 	'pokemon.cpp',
 	'pokedex.cpp',
 )

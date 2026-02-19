@@ -18,19 +18,28 @@ Pokedex::size
 }
 
 Pokemon
+Pokedex::at
+(int position)
+{
+	int current_position = 0;
+	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
+	while (current_entry != nullptr && current_position < position)
+	{ current_entry = current_entry->successor; current_position++; }
+	if (current_entry == nullptr)
+	{ Pokemon pokemon; pokemon.name = ""; return pokemon; }
+	return current_entry->pokemon;
+}
+
+Pokemon
 Pokedex::get_by_name
 (std::string name)
 {
-	Pokemon pokemon;
-	pokemon.name = "";
 	std::shared_ptr<PokedexPokemonEntry> current_entry = first_pokemon_entry;
-	while (current_entry != nullptr && pokemon.name == "")
-	{
-		if (current_entry->pokemon.name == name)
-		{ pokemon = current_entry->pokemon; }
-		current_entry = current_entry->successor;
-	}
-	return pokemon;
+	while (current_entry != nullptr && current_entry->pokemon.name != name)
+	{ current_entry = current_entry->successor; }
+	if (current_entry == nullptr)
+	{ Pokemon pokemon; pokemon.name = ""; return pokemon; }
+	return current_entry->pokemon;
 }
 
 bool

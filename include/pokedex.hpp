@@ -22,6 +22,12 @@ public:
 	size
 	(void);
 
+	// Get by position
+	Pokemon
+	at
+	(int position);
+
+	// Get by name
 	Pokemon
 	get_by_name
 	(std::string name);
