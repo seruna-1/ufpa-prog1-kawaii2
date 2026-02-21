@@ -6,6 +6,7 @@
 // autores: Mateus Barreto, Yuri Delgado, Nicolas Alho
 // Este programa é uma Pokedex simplificada. Ele registra pokemons e alguns de seus atributos(id, geração, fraquezas, resistencias, etc)
 // conta com 7 funções: Load, add, search, print, remove, sort e save. A explicação de cada função reside em comentários na menu/main.cpp
+// arquivo com os dados de todos os 1025 pokemons está guardado em: test/dex.txt
 int
 main
 (
