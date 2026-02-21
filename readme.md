@@ -49,23 +49,17 @@ egg group: Grass;
 
 **To do:**
 
- - Optional graphical interface (Raylib).
+ - Optional graphical interface (Raylib). (wasn't fully implemented. Probably broken right now.)
 
 ## Building
 
-**With meson:**
-
-```sh
-meson setup build
-ninja -C build
-```
-
-**Without meson:**
+suggested compiler: g++
 
 ```sh
 g++ -I include/ src/command_line/main.cpp src/command_line/pokedex.cpp  src/pokemon.cpp src/pokedex.cpp -o pokedex-cli
 ``` 
 or
+
 ```sh
 clang++ -I include/ src/command_line/main.cpp src/command_line/pokedex.cpp  src/pokemon.cpp src/pokedex.cpp -o pokedex-cli
 ``` 
