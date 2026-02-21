@@ -131,12 +131,12 @@ CommandLinePokedex::parse
 			const char* field = key+strlen("--set-"); // Skip --set-.
 			static const char* field_id = "id";
 			static const char* field_name = "name";
-			static const char* field_evolution_stage = "stage";
+			static const char* field_base_stat_total = "bst";
 			static const char* field_weight = "weight";
 			if (strncmp(field, field_id, strlen(field_id)) == 0)
 			{ pokemon.global_id = std::stoi(argv[i+1]); }
-			else if (strncmp(field, field_evolution_stage, strlen(field_evolution_stage)) == 0)
-			{ pokemon.evolution_stage = std::stoi(argv[i+1]); }
+			else if (strncmp(field, field_base_stat_total, strlen(field_base_stat_total)) == 0)
+			{ pokemon.base_stat_total = std::stoi(argv[i+1]); }
 			else if (strncmp(field, field_weight, strlen(field_weight)) == 0)
 			{ pokemon.weight = std::atof(argv[i+1]); }
 			// TODO: bug here, name isn't set.
