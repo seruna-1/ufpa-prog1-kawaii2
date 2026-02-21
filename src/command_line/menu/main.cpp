@@ -6,6 +6,8 @@
 #define MENU_OPTION_5 "remove"
 #define MENU_OPTION_6 "sort"
 #define MENU_OPTION_7 "save" 
+// autores: Mateus Barreto, Yuri Delgado, Nicolas Alho
+// data file with all 1025 pokemon is stored in: /testing/dex.txt
 int
 userinput //handles user input, converts string user input into a valid integer for operation selection and returns that value
 (void)
@@ -86,7 +88,7 @@ bool menu(int& argc){
             
             switch (userinput()) //has no default because userinput() already handles errors and always returns a valid operation number;
             {
-                case 1:
+                case 1: //loads file into memory, allowing for the other operations to work.
                 {
                     std::string filename;
                     std::cout << "Type the file name: ";
@@ -97,9 +99,9 @@ bool menu(int& argc){
                 }
                 
 
-		case 2:
+		case 2: //adds new pokemon at the end of the list currently stored in memory. 
 		{
-		    Pokemon p;
+		    Pokemon p; 
 	
 		    int current_size = pokedex.get_size();
 		    if (current_size == 0)
@@ -147,7 +149,7 @@ bool menu(int& argc){
 		    break;
 		    }
 
-		case 3:
+		case 3: //search for a pokemon in the list. searching can be through id or name.
                 {
                     std::cout << "Search by:\n1. Name\n2. ID\nChoose: ";
                     int search_opt;
@@ -174,7 +176,7 @@ bool menu(int& argc){
                     }
                     break;
                 }
-                case 4:
+                case 4: //allows for printing all of the pokemons, or just the ones in an interval, defined by the pokemons id.
                 {
                     std::cout << "1. Print All\n2. Print Interval\nChoose: ";
                     int print_opt;
@@ -193,7 +195,7 @@ bool menu(int& argc){
                     }
                     break;
                 }
-                case 5:
+                case 5: //allows removing any pokemon. Works only with names. If testing, heres some popular mons: Lucario, Pikachu, Piplup, Vaporeon.
                 {
                     std::string name;
                     std::cout << "Type the name to remove: ";
@@ -204,7 +206,7 @@ bool menu(int& argc){
                     { system("clear"); printmenu(); std::cout << "Pokemon not found.\n"; }
                     break;
                 }
-                case 6:
+                case 6: // Sorts the list currently stored in memory. Supports sorting by id and weight(due do how pokemon games are made, the list comes already sorted by id. But the function works as expected.)
                 {
                     int sorttype;
                     std::cout << "Select the desired sorting parameter: \n 1 for id\n 2 for weight\n";
@@ -217,7 +219,7 @@ bool menu(int& argc){
                         std::cout<<"Invalid sorting parameter.\n";
                     break;
                 }
-                case 7:
+                case 7: //Save the changes to a file specified by the user. 
                 {
                     std::string filename;
                     std::cout << "File name to save the changes: ";
