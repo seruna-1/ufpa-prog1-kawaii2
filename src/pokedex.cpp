@@ -124,7 +124,16 @@ Pokedex::save_to_file
 	PokedexPokemonEntry *current_entry = first_pokemon_entry.get();
 	while (current_entry != NULL)
 	{
-		output_file << current_entry->pokemon.name;
+		output_file << "id: "<<current_entry->pokemon.global_id<<";\n";
+		output_file << "name: "<<current_entry->pokemon.name<<";\n";
+		output_file << "abilities: "<<current_entry->pokemon.abilities[0]<<";\n";
+		output_file << "base stat total: "<<current_entry->pokemon.base_stat_total<<";\n";
+		output_file << "weight: "<<current_entry->pokemon.weight<<";\n";
+		output_file << "generation: "<<current_entry->pokemon.generation<<";\n";
+		output_file << "weaknesses: "<<current_entry->pokemon.weaknesses[0]<<";\n";
+		output_file << "resistances: "<<current_entry->pokemon.resistances[0]<<";\n";
+		output_file << "immunities: "<<current_entry->pokemon.immunities[0]<<";\n";
+		output_file << "egg group: "<<current_entry->pokemon.egg_group[0]<<";\n\n";
 		current_entry = current_entry->successor.get();
 	}
 	output_file.close();
