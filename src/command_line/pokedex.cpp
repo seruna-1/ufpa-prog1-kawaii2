@@ -27,7 +27,7 @@ const char *CommandLinePokedex::help_message =
 "\n\n"
 "Sorting, should appear a single time:"
 "\n"
-"\t--sort <size|stage>"
+"\t--sort <id|weight>"
 "\n\n"
 "Adding an entry to pokedex. OBS: See representation syntax."
 "\n"
