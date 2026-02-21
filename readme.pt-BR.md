@@ -71,7 +71,7 @@ clang++ -I include/ src/command_line/main.cpp src/command_line/pokedex.cpp  src/
 ``` 
 
 ## Testes
-Testes são para ser feitos com o arquivo `test/dex.txt`, que contém os dados de todos os 1025 pokemons.
+Testes são para ser feitos com o arquivo `test/dex.txt`, que contém os dados de todos os 1025 pokemons. O arquivo foi feito com o uso de um script em python que puxava o html do site "https://pokemondb.net/pokedex/" e registrava os dados a partir disso. O script em questão está na pasta /test também.
 
 Inicialmente, os testes foram feitos com o arquivo `test/smalldex.txt`, mas ele agora está obsoleto, assim como o `bigdex.txt`, que só persistem para fins de análise. `bigdex.txt` foi gerado puxando um arquivo json de  [olitreadwell](https://github.com/olitreadwell/pokemon-classic-json/blob/main/pokedex.json), que reune 151 pokemons clássicos.
 ## License
