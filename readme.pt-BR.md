@@ -51,16 +51,9 @@ egg group: Grass;
 
  - Interface gráfica opcional utilizando (Raylib).
 
-## Building
+## Compilação
 
-**Com meson:**
-
-```sh
-meson setup build
-ninja -C build
-```
-
-**Sem meson:**
+compilador recomendado: g++
 
 ```sh
 g++ -I include/ src/command_line/main.cpp src/command_line/pokedex.cpp  src/pokemon.cpp src/pokedex.cpp -o pokedex-cli
