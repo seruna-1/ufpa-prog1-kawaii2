@@ -133,15 +133,29 @@ CommandLinePokedex::parse
 			static const char* field_name = "name";
 			static const char* field_base_stat_total = "bst";
 			static const char* field_weight = "weight";
+			static const char* field_abilities = "abilities";
+			static const char* field_weaknesses = "weaknesses";
+			static const char* field_resistances = "resistances";
+			static const char* field_immunities = "immunities";
+			static const char* field_egg_group = "egg_group";
 			if (strncmp(field, field_id, strlen(field_id)) == 0)
 			{ pokemon.global_id = std::stoi(argv[i+1]); }
 			else if (strncmp(field, field_base_stat_total, strlen(field_base_stat_total)) == 0)
 			{ pokemon.base_stat_total = std::stoi(argv[i+1]); }
 			else if (strncmp(field, field_weight, strlen(field_weight)) == 0)
 			{ pokemon.weight = std::atof(argv[i+1]); }
-			// TODO: bug here, name isn't set.
+			else if (strncmp(field, field_abilities, strlen(field_abilities)) == 0)
+			{ pokemon.abilities[0] = argv[i+1]; }
+			else if (strncmp(field, field_weaknesses, strlen(field_weaknesses)) == 0)
+			{ pokemon.weaknesses[0] = argv[i+1]; }
+			else if (strncmp(field, field_resistances, strlen(field_resistances)) == 0)
+			{ pokemon.resistances[0] = argv[i+1]; }
+			else if (strncmp(field, field_immunities, strlen(field_immunities)) == 0)
+			{ pokemon.immunities[0] = argv[i+1]; }
+			else if (strncmp(field, field_egg_group, strlen(field_egg_group)) == 0)
+			{ pokemon.egg_group[0] = argv[i+1]; }
 			else if (strncmp(field, field_name, strlen(field_name)) == 0)
-			{ pokemon.name = argv[i]; }
+			{ pokemon.name = argv[i+1]; }
 			else
 			{
 				fprintf(stderr, "Error. Unknown field to set: %s.\n", field);
